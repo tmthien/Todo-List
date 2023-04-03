@@ -30,7 +30,7 @@
                         <td>{{ ++$i }}</td>
                         <td>{{ $task->title }}</td> {{-- Hiển thị title trong bảng task --}}
                         <td>{{ $task->description }}</td> {{-- Hiển thị description trong bảng task --}}
-                        <td>{{ $task->user_id }}</td>
+                        <td>{{ $task->user->name }}</td>
                         <td>{{ $task->status }}</td> {{-- Hiển thị status trong bảng task --}}
                         <td>
                             <form action="{{ route('tasks.destroy',$task->id) }}" method="POST">

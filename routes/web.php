@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\MyTaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,4 +39,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('profile',[ProfileController::class, 'index'])->name('profile.index');
     Route::post('profile/{user}',[ProfileController::class, 'update'])->name('profile.update');
     Route::get('profile/{user}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+
+    Route::get('mytask', [MyTaskController::class, 'index'])->name('mytask.index');
   });

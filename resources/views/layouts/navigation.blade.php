@@ -28,7 +28,7 @@
                 </div>
                 @if(Auth::user()->role == 1 )
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-nav-link>
+                        <x-nav-link :href="route('mytask.index')" :active="request()->routeIs('mytask.index')">
                             {{ __('My Task') }}
                         </x-nav-link>
                     </div>

@@ -17,20 +17,35 @@
                 </div>
                 @endif
             </div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="row p-6">
+                <div class="col-md-12">
                     <div class="form-group">
                         <strong>Title:</strong>
                         {{ $task->title }}
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="col-md-12">
                     <div class="form-group">
                         <strong>Description:</strong>
                         {{ $task->description }}
                     </div>
                 </div>
-                
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <strong>Assigned to:</strong>
+                        @if($task->user_id != 1) {{ $task->user->name }}
+                        @else <?php echo 'None' ?>
+                        @endif
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <strong>Status:</strong>
+                        {{ $task->status }}
+                    </div>
+                </div>
+               
             </div>
         </div>
     </div>

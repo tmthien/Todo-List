@@ -30,8 +30,12 @@
                         <td>{{ ++$i }}</td>
                         <td>{{ $task->title }}</td> {{-- Hiển thị title trong bảng task --}}
                         <td>{{ $task->description }}</td> {{-- Hiển thị description trong bảng task --}}
-                        <td>{{ $task->user->name }}</td>
-                        <td>{{ $task->status }}</td> {{-- Hiển thị status trong bảng task --}}
+                        <td> 
+                            @if($task->user_id != 1) {{ $task->user->name }}
+                            @else <?php echo 'None' ?>
+                            @endif
+                        </td>
+                        <td>{{ ucfirst($task->status) }}</td> {{-- Hiển thị status trong bảng task --}}
                         <td>
                             <form action="{{ route('tasks.destroy',$task->id) }}" method="POST">
                                 <a class="btn btn-outline-info" href="{{ route('tasks.show',$task->id) }}"><i class="fa-regular fa-eye"></i></a>

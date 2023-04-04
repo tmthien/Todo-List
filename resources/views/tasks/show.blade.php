@@ -41,8 +41,25 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <strong>Status:</strong>
-                        {{ $task->status }}
+                        {{ ucfirst($task->status) }}
                     </div>
+                </div>
+                <div class="col-md-12">
+                    @include('tasks._comment_replies', ['comments' => $task->comments, 'task_id' => $task->id])
+                </div>
+                <div class="col-md-12">
+                    <form action="{{ route('comment.add') }}" method="POST">
+                        @csrf
+                        <div class="form-group">
+                            <strong>Comment:</strong>
+                            <input type="text" name="body" class="form-control"/>
+                            <input type="hidden" name="task_id" value="{{ $task->id }}" />
+                            <input type="hidden" name="user_id" value="{{ auth()->id() }}"/>
+                            <div class="form-group pt-2">
+                                <input type="submit" class="btn btn-warning" value="Comment" />
+                            </div>
+                        </div>
+                    </form>
                 </div>
                
             </div>

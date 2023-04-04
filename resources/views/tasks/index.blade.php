@@ -9,7 +9,9 @@
                     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                         {{ __('Tasks List') }}
                     </h2>
-                    <a class="btn btn-outline-success" href="{{ route('tasks.create') }}">Add new task</a>
+                    @if($user->role == 0)
+                        <a class="btn btn-outline-success" href="{{ route('tasks.create') }}">Add new task</a>
+                    @endif
                 </div>
                 @if ($message = Session::get('success'))
                 <div class="alert alert-success">
@@ -39,10 +41,12 @@
                         <td>
                             <form action="{{ route('tasks.destroy',$task->id) }}" method="POST">
                                 <a class="btn btn-outline-info" href="{{ route('tasks.show',$task->id) }}"><i class="fa-regular fa-eye"></i></a>
-                                <a class="btn btn-outline-primary" href="{{ route('tasks.edit',$task->id) }}"><i class="fa-sharp fa-regular fa-pen-to-square"></i></a>
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Are you sure?')"><i class="fa-sharp fa-solid fa-trash"></i></button>
+                                @if($user->role == 0)
+                                    <a class="btn btn-outline-primary" href="{{ route('tasks.edit',$task->id) }}"><i class="fa-sharp fa-regular fa-pen-to-square"></i></a>
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Are you sure?')"><i class="fa-sharp fa-solid fa-trash"></i></button>
+                                @endif
                             </form>
                         </td>
                     </tr>

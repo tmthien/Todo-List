@@ -30,25 +30,27 @@
                         {{ $user->email }}
                     </div>
                 </div>
-                @if($user->id !=1 && $user->status == 1)
-                    <div class="col-md-12 text-center">
-                        <form action="{{ route('users.update',$user->id) }}" method="POST">
-                            @csrf
-                            @method("PUT")
-                            <input type="hidden" name="status" value="0">
-                            <button type="submit" class="btn btn-outline-danger">Disable Member</button>
-                        </form>
-                    </div>
-                @endif
-                @if($user->status == 0)
-                    <div class="col-md-12 text-center">
-                        <form action="{{ route('users.update',$user->id) }}" method="POST">
-                            @csrf
-                            @method("PUT")
-                            <input type="hidden" name="status" value="1">
-                            <button type="submit" class="btn btn-outline-success">Active Member</button>
-                        </form>
-                    </div>
+                @if($roleUser->role == 0)
+                    @if($user->id !=1 && $user->status == 1)
+                        <div class="col-md-12 text-center">
+                            <form action="{{ route('users.update',$user->id) }}" method="POST">
+                                @csrf
+                                @method("PUT")
+                                <input type="hidden" name="status" value="0">
+                                <button type="submit" class="btn btn-outline-danger">Disable Member</button>
+                            </form>
+                        </div>
+                    @endif
+                    @if($user->status == 0)
+                        <div class="col-md-12 text-center">
+                            <form action="{{ route('users.update',$user->id) }}" method="POST">
+                                @csrf
+                                @method("PUT")
+                                <input type="hidden" name="status" value="1">
+                                <button type="submit" class="btn btn-outline-success">Active Member</button>
+                            </form>
+                        </div>
+                    @endif
                 @endif
             </div>
         </div>

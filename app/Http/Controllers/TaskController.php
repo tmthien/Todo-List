@@ -15,9 +15,10 @@ class TaskController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   
+        $user = auth()->user();
         $tasks = Task::paginate(5);
-        return view('tasks.index', compact('tasks'))
+        return view('tasks.index', compact('tasks', 'user'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 

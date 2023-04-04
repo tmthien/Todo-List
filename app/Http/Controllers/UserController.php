@@ -14,9 +14,9 @@ class UserController extends Controller
      */
     public function index()
     {   
-        $users = User::all();
-        // dd($users);
-        return view('users.index', compact('users'));
+        $users = User::paginate(5);
+        return view('users.index', compact('users'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -69,9 +69,14 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(User $user, Request $request)
     {
-        //
+        $user->update([
+            'status' => $request->status,
+        ]);
+
+        return redirect()->route('users.index')
+            ->with('success', 'User updated successfully');
     }
 
     /**

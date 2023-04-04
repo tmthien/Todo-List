@@ -15,7 +15,7 @@
                         <th>Email</th>
                         <th>Role</th>
                         <th>Active</th>
-                        <th width="120px"></th>
+                        <th width="50px"></th>
 
                     </tr>
                     @foreach($users as $user)
@@ -30,20 +30,18 @@
                         </td>
                         <td>
                             @if($user->status == 1) <?php echo '<i style="color: #26bc2f;" class="fa-solid fa-circle-check"></i>'?>
-                            @else <?php echo "<p>Unactive</p>"?>
+                            @else <?php echo '<i style="color:red;" class="fa-solid fa-circle-xmark"></i>'?>
                             @endif
                         </td>
                         <td>
                             <form action="" method="POST">
                                 <a class="btn btn-outline-info" href="{{ route('users.show',$user->id) }}"><i class="fa-regular fa-eye"></i></a>
-                                @if($user->role != 0)
-                                    <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Are you sure?')"><i class="fa-sharp fa-solid fa-trash"></i></button>
-                                @endif
                             </form>
                         </td>
                     </tr>
                     @endforeach
                 </table>
+                {!! $users->links() !!}
             </div>
         </div>
     </div>

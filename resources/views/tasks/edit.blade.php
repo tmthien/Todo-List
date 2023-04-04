@@ -45,7 +45,7 @@
                             <div class="form-group">
                                 <strong>Assign:</strong>
                                 <select name="user_id" class="form-control">
-                                    <option>-- Assign task to Member --</option>
+                                    <option>{{$task->user->name}}</option>
                                     @foreach($users as $user)
                                         <option value="{{ $user->id }}">{{ $user->name }}</option>
                                     @endforeach

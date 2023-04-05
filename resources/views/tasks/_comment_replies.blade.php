@@ -1,6 +1,5 @@
 @foreach($comments as $comment)
 <div class="display-comment" style="padding-left: 3%;">
-    
     <p><strong>{{ $comment->user->name }}</strong>: {{ $comment->body }}</p>
     <div style="color:blue;" class="label" onclick="show('reply{{$comment->id}}')">Reply</div>
     <form method="post" action="{{ route('reply.add') }}" id="reply{{$comment->id}}" style="display: none;">
@@ -14,13 +13,13 @@
     </form>
     @include('tasks._comment_replies', ['comments' => $comment->replies])
 </div>
-@endforeach
-
 <script type="text/javascript">
     window.onload = setup;
 
     function setup() {
+   
         document.getElementById('reply{{$comment->id}}').style.display = 'reply{{$comment->id}}';
+
     }
 
     function show(newItem) {
@@ -32,3 +31,4 @@
         }
     }
 </script>
+@endforeach

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Models\Task;
 use App\Models\User;
@@ -59,7 +60,9 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        return view('tasks.show', compact('task'));
+        $comment = Comment::select('*')->where('commentable_id',$task->id)->get();
+        // dd($comment);
+        return view('tasks.show', compact('task', 'comment'));
     }
 
     /**

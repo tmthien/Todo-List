@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 class CommentController extends Controller
 {
     public function add(Request $request) {
-        // dd($request);
         $comment = new Comment;
         $comment->body = $request->get('body');
         $comment->user()->associate($request->user());

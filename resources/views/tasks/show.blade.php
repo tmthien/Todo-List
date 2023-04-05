@@ -45,7 +45,9 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    @include('tasks._comment_replies', ['comments' => $task->comments, 'task_id' => $task->id])
+                    @if(isset($comment))
+                        @include('tasks._comment_replies', ['comments' => $task->comments, 'task_id' => $task->id])
+                    @endif
                 </div>
                 <div class="col-md-12">
                     <form action="{{ route('comment.add') }}" method="POST">

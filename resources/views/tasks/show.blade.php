@@ -27,7 +27,9 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <strong>Description:</strong>
-                        {{ $task->description }}
+                        <?php 
+                            echo $task->description;
+                        ?>
                     </div>
                 </div>
                 <div class="col-md-12">

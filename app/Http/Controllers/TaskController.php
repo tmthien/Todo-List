@@ -56,11 +56,11 @@ class TaskController extends Controller
         $file = $request->file;
         $name = Str::random(10);
         $url = Storage::putFileAs('files', $file, $name.'.'.$file->extension());
-
-        $task = Task::create([
+        Task::create([
             'title' => $request -> input('title'),
             'description' => $request -> input('description'),
-            'file' => env('APP_URL') . '/' . $url,
+            'file' => $url,
+            'name_file'
         ]);
 
         return redirect()->route('tasks.index')
@@ -101,7 +101,6 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        // dd($task);
         // dd($request);
         $request->validate([
             'title' => 'required',
@@ -128,18 +127,9 @@ class TaskController extends Controller
             ->with('success', 'Task deleted successfully');
     }
 
-    // public function downloadFile(Task $tasks) {
-    //     $tasks = Task::get();
-    //     dd($tasks);
-    //     foreach($tasks as $task){
-    //         $pathToFile = storage_path('app' . $task->file);
-    //         return response()->download($pathToFile);
-    //     }
-    // }
-
     public function downloadFile($id){
         $task = Task::where('id', $id)->firstOrFail();
-        $pathToFile = storage_path('app/' . $task->file);
+        $pathToFile = storage_path('app\\' . $task->file);
         return response()->download($pathToFile);
     }
 }

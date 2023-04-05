@@ -31,7 +31,7 @@
                     <tr>
                         <td>{{ ++$i }}</td>
                         <td>{{ $task->title }}</td> {{-- Hiển thị title trong bảng task --}}
-                        <td>{{ $task->description }}</td> {{-- Hiển thị description trong bảng task --}}
+                        <td><?php echo $task->description ?></td> {{-- Hiển thị description trong bảng task --}}
                         <td> 
                             @if($task->user_id != 1) {{ $task->user->name }}
                             @else <?php echo 'None' ?>

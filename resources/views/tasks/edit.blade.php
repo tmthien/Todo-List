@@ -38,7 +38,7 @@
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="form-group">
                                 <strong>Description:</strong>
-                                <textarea class="form-control" style="height:150px" name="description" placeholder="Description">{{ $task->description }}</textarea>
+                                <textarea class="form-control ckeditor" style="height:150px" name="description" placeholder="Description">{{ $task->description }}</textarea>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12">
@@ -63,3 +63,9 @@
     </div>
 </div>
 @endsection
+<script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+       $('.ckeditor').ckeditor();
+    });
+</script>

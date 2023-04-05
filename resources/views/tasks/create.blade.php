@@ -24,23 +24,29 @@
                 </div>
                 @endif
 
-                <form action="{{ route('tasks.store') }}" method="POST">
+                <form action="{{ route('tasks.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <strong>Title:</strong>
                                 <input type="text" name="title" class="form-control" placeholder="Title">
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <strong>Description:</strong>
-                                <textarea class="form-control" style="height:150px" name="description" placeholder="Description"></textarea>
+                                <textarea class="form-control ckeditor" style="height:150px" name="description" placeholder="Description"></textarea>
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <strong>Upload File:</strong>
+                                <input type="file" name="file" class="form-control" accept=".jpg,.jpeg,.bmp,.png,.gif,.doc,.docx,.csv,.rtf,.xlsx,.xls,.txt,.pdf,.zip">
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-center">
                             <button type="submit" class="btn btn-outline-primary">Submit</button>
                         </div>
                     </div>
@@ -50,3 +56,9 @@
     </div>
 </div>
 @endsection
+<script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+       $('.ckeditor').ckeditor();
+    });
+</script>

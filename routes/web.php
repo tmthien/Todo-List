@@ -41,4 +41,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('profile/{user}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
 
     Route::get('mytask', [MyTaskController::class, 'index'])->name('mytask.index');
+    Route::get('tasks/{$id}/downloadFile', [TaskController::class, 'downloadFile'])->name('downloadFile');
   });

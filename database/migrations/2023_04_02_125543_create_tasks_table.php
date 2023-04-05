@@ -19,6 +19,7 @@ class CreateTasksTable extends Migration
             $table->string('title');
             $table->text('description');
             $table->string('status')->default(StatusTask::Pending);
+            $table->string('file')->nullable();
             $table->tinyInteger('user_id')->default(1);
             $table->timestamps();
         });

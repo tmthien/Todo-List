@@ -45,11 +45,17 @@
                     </div>
                 </div>
                 <div class="col-md-12">
+                    <div class="form-group">
+                        <strong>File:</strong>
+                        <a href="{{ route('downloadFile', $task->id) }}">{{ $task->file }}</a> 
+                    </div>
+                </div>
+                <div class="col-md-12 border">
                     @if(isset($comment))
                         @include('tasks._comment_replies', ['comments' => $task->comments, 'task_id' => $task->id])
                     @endif
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12 border">
                     <form action="{{ route('comment.add') }}" method="POST">
                         @csrf
                         <div class="form-group">

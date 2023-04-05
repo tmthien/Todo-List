@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
+            $table->string('image')->nullable();
             $table->tinyInteger('role')->default(UserRole::Member);
             $table->tinyInteger('status')->default(StatusMember::Active);
             $table->rememberToken();

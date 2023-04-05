@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Models\Task;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 
 class TaskController extends Controller
@@ -41,12 +43,25 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->validate([
             'title' => 'required',
             'description' => 'required',
+            'file' => 'required|file|mimes:jpg,jpeg,bmp,png,doc,docx,csv,rtf,xlsx,xls,txt,pdf,zip',
         ]);
-        Task::create($request->all());
+        
+        if (!$request->has('file')) {
+            return response()->json(['message' => 'Missing file'], 422);
+        };
+        // dd($request->file);
+        $file = $request->file;
+        $name = Str::random(10);
+        $url = Storage::putFileAs('files', $file, $name.'.'.$file->extension());
+
+        $task = Task::create([
+            'title' => $request -> input('title'),
+            'description' => $request -> input('description'),
+            'file' => env('APP_URL') . '/' . $url,
+        ]);
 
         return redirect()->route('tasks.index')
             ->with('success', 'Task created successfully.');
@@ -60,7 +75,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        $comment = Comment::select('*')->where('commentable_id',$task->id)->get();
+        $comment = Comment::where('commentable_id',$task->id)->get();
         // dd($comment);
         return view('tasks.show', compact('task', 'comment'));
     }
@@ -111,5 +126,20 @@ class TaskController extends Controller
 
         return redirect()->route('tasks.index')
             ->with('success', 'Task deleted successfully');
+    }
+
+    // public function downloadFile(Task $tasks) {
+    //     $tasks = Task::get();
+    //     dd($tasks);
+    //     foreach($tasks as $task){
+    //         $pathToFile = storage_path('app' . $task->file);
+    //         return response()->download($pathToFile);
+    //     }
+    // }
+
+    public function downloadFile($id){
+        $task = Task::where('id', $id)->firstOrFail();
+        $pathToFile = storage_path('app/' . $task->file);
+        return response()->download($pathToFile);
     }
 }

@@ -10,7 +10,7 @@
                     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                         {{ __('Edit task') }}
                     </h2>
-                    <a class="btn btn-outline-primary" href="{{ route('tasks.index') }}"> Back</a>
+                    <a class="btn btn-sm btn-outline-primary" href="{{ route('tasks.index') }}"> Back</a>
                 </div>
 
                 @if ($errors->any())

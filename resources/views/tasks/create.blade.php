@@ -10,7 +10,7 @@
                     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                         {{ __('Create new task') }}
                     </h2>
-                    <a class="btn btn-outline-primary" href="{{ route('tasks.index') }}"> Back</a>
+                    <a class="btn btn-sm btn-outline-primary" href="{{ route('tasks.index') }}"> Back</a>
                 </div>
 
                 @if ($errors->any())
@@ -47,7 +47,7 @@
                             </div>
                         </div>
                         <div class="col-md-12 text-center">
-                            <button type="submit" class="btn btn-outline-primary">Submit</button>
+                            <button type="submit" class="btn btn-sm btn-outline-primary">Submit</button>
                         </div>
                     </div>
                 </form>

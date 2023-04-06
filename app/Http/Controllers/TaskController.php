@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
 
 
 class TaskController extends Controller
@@ -18,7 +19,7 @@ class TaskController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
+    {
         $user = auth()->user();
         $tasks = Task::paginate(5);
         return view('tasks.index', compact('tasks', 'user'))
@@ -32,7 +33,10 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return view('tasks.create');
+        $user = User::get();
+        if (Gate::allows('isAdmin', $user)) {
+            return view('tasks.create');
+        }
     }
 
     /**
@@ -48,17 +52,17 @@ class TaskController extends Controller
             'description' => 'required',
             'file' => 'required|file|mimes:jpg,jpeg,bmp,png,doc,docx,csv,rtf,xlsx,xls,txt,pdf,zip',
         ]);
-        
+
         if (!$request->has('file')) {
             return response()->json(['message' => 'Missing file'], 422);
         };
         // dd($request->file);
         $file = $request->file;
         $name = Str::random(10);
-        $url = Storage::putFileAs('files', $file, $name.'.'.$file->extension());
+        $url = Storage::putFileAs('files', $file, $name . '.' . $file->extension());
         Task::create([
-            'title' => $request -> input('title'),
-            'description' => $request -> input('description'),
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
             'file' => $url,
             'name_file'
         ]);
@@ -75,9 +79,9 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        $comment = Comment::where('commentable_id',$task->id)->get();
+        $comment = Comment::where('commentable_id', $task->id)->get();
         // dd($comment);
-        return view('tasks.show', compact('task', 'comment'));
+            return view('tasks.show', compact('task', 'comment'));
     }
 
     /**
@@ -89,7 +93,9 @@ class TaskController extends Controller
     public function edit(Task $task, User $users)
     {
         $users = User::get();
-        return view('tasks.edit', compact('task','users'));
+        if(Gate::allows('isAdmin', $users)){
+            return view('tasks.edit', compact('task', 'users'));
+        }
     }
 
     /**
@@ -106,7 +112,7 @@ class TaskController extends Controller
             'title' => 'required',
             'description' => 'required',
         ]);
-        
+
         $task->update($request->all());
 
         return redirect()->route('tasks.index')
@@ -127,7 +133,8 @@ class TaskController extends Controller
             ->with('success', 'Task deleted successfully');
     }
 
-    public function downloadFile($id){
+    public function downloadFile($id)
+    {
         $task = Task::where('id', $id)->firstOrFail();
         $pathToFile = storage_path('app\\' . $task->file);
         return response()->download($pathToFile);

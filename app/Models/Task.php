@@ -15,6 +15,7 @@ class Task extends Model
         'description',
         'user_id',
         'file',
+        'status'
     ];
     public function user(): BelongsTo
     {

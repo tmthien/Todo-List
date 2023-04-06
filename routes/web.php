@@ -41,5 +41,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('profile/{user}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
 
     Route::get('mytask', [MyTaskController::class, 'index'])->name('mytask.index');
+    Route::get('mytask/{id}', [MyTaskController::class, 'show'])->name('mytask.show');
     Route::get('tasks/{id}/dowload_file', [TaskController::class, 'downloadFile'])->name('downloadFile');
+    Route::post('mytask/{id}', [MyTaskController::class, 'update'])->name('mytask.update');
   });

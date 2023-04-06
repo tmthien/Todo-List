@@ -10,13 +10,13 @@
                         {{ __('Tasks List') }}
                     </h2>
                     @if($user->role == 0)
-                        <a class="btn btn-outline-success" href="{{ route('tasks.create') }}">Add new task</a>
+                        <a class="btn btn-sm btn-outline-success" href="{{ route('tasks.create') }}">Add new task</a>
                     @endif
                 </div>
                 @if ($message = Session::get('success'))
-                <div class="alert alert-success">
-                    <p>{{ $message }}</p>
-                </div>
+                    <div class="alert alert-success">
+                        <p>{{ $message }}</p>
+                    </div>
                 @endif
                 <table class="table table-bordered">
                     <tr>
@@ -25,7 +25,7 @@
                         <th>Details</th>
                         <th>Assign</th>
                         <th>Status</th>
-                        <th width="160px"></th>
+                        <th width="130px"></th>
                     </tr>
                     @foreach ($tasks as $task)
                     <tr>
@@ -40,12 +40,12 @@
                         <td>{{ ucfirst($task->status) }}</td> {{-- Hiển thị status trong bảng task --}}
                         <td>
                             <form action="{{ route('tasks.destroy',$task->id) }}" method="POST">
-                                <a class="btn btn-outline-info" href="{{ route('tasks.show',$task->id) }}"><i class="fa-regular fa-eye"></i></a>
+                                <a class="btn btn-sm btn-outline-info" href="{{ route('tasks.show',$task->id) }}"><i class="fa-regular fa-eye"></i></a>
                                 @if($user->role == 0)
-                                    <a class="btn btn-outline-primary" href="{{ route('tasks.edit',$task->id) }}"><i class="fa-sharp fa-regular fa-pen-to-square"></i></a>
+                                    <a class="btn btn-sm btn-outline-primary" href="{{ route('tasks.edit',$task->id) }}"><i class="fa-sharp fa-regular fa-pen-to-square"></i></a>
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Are you sure?')"><i class="fa-sharp fa-solid fa-trash"></i></button>
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')"><i class="fa-sharp fa-solid fa-trash"></i></button>
                                 @endif
                             </form>
                         </td>

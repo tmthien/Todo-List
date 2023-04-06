@@ -9,7 +9,7 @@
                     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                         {{ __('Profile') }}
                     </h2>
-                        <a class="btn btn-outline-primary" href="{{ route('dashboard') }}">Back</a>
+                        <a class="btn btn-sm btn-outline-primary" href="{{ route('dashboard') }}">Back</a>
                 </div>
                 @if ($message = Session::get('success'))
                 <div class="alert alert-success">
@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div class="col-md-12 text-center">
-                    <a href="{{route('profile.edit',auth()->id())}}" type="submit" class="btn btn-outline-primary">Edit</a>
+                    <a href="{{route('profile.edit',auth()->id())}}" type="submit" class="btn btn-sm btn-outline-primary">Edit</a>
                 </div>
             </div>
         </div>

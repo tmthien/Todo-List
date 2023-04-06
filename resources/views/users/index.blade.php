@@ -37,7 +37,7 @@
                         </td>
                         <td>
                             <form action="" method="POST">
-                                <a class="btn btn-outline-info" href="{{ route('users.show',$user->id) }}"><i class="fa-regular fa-eye"></i></a>
+                                <a class="btn btn-sm btn-outline-info" href="{{ route('users.show',$user->id) }}"><i class="fa-regular fa-eye"></i></a>
                             </form>
                         </td>
                     </tr>

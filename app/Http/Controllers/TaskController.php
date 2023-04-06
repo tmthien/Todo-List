@@ -50,7 +50,7 @@ class TaskController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
-            'file' => 'required|file|mimes:jpg,jpeg,bmp,png,doc,docx,csv,rtf,xlsx,xls,txt,pdf,zip',
+            'file' => 'file|mimes:jpg,jpeg,bmp,png,doc,docx,csv,rtf,xlsx,xls,txt,pdf,zip',
         ]);
 
         if (!$request->has('file')) {
@@ -64,7 +64,6 @@ class TaskController extends Controller
             'title' => $request->input('title'),
             'description' => $request->input('description'),
             'file' => $url,
-            'name_file'
         ]);
 
         return redirect()->route('tasks.index')

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -15,8 +16,10 @@ class UserController extends Controller
     public function index()
     {   
         $users = User::paginate(5);
-        return view('users.index', compact('users'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+        if (Gate::allows('isAdmin', $users)) {
+            return view('users.index', compact('users'))
+                ->with('i', (request()->input('page', 1) - 1) * 5);
+        } 
     }
 
     /**
@@ -48,8 +51,10 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $roleUser = auth()->user();
-        return view('users.show', compact('user', 'roleUser'));
+        if (Gate::allows('isAdmin', $user)) {
+            $roleUser = auth()->user();
+            return view('users.show', compact('user', 'roleUser'));
+        }
     }
 
     /**
@@ -71,13 +76,15 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(User $user, Request $request)
-    {
-        $user->update([
-            'status' => $request->status,
-        ]);
-
-        return redirect()->route('users.index')
-            ->with('success', 'User updated successfully');
+    {   
+        if (Gate::allows('isAdmin', $user)) {
+            $user->update([
+                'status' => $request->status,
+            ]);
+    
+            return redirect()->route('users.index')
+                ->with('success', 'User updated successfully');
+        }
     }
 
     /**

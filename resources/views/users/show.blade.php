@@ -9,7 +9,7 @@
                     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                         {{ __('Member Detail') }}
                     </h2>
-                    <a class="btn btn-outline-primary" href="{{ route('users.index') }}"> Back</a>
+                    <a class="btn btn-sm btn-outline-primary" href="{{ route('users.index') }}"> Back</a>
                 </div>
                 @if ($message = Session::get('success'))
                 <div class="alert alert-success">
@@ -37,7 +37,7 @@
                                 @csrf
                                 @method("PUT")
                                 <input type="hidden" name="status" value="0">
-                                <button type="submit" class="btn btn-outline-danger">Disable Member</button>
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Disable Member</button>
                             </form>
                         </div>
                     @endif
@@ -47,7 +47,7 @@
                                 @csrf
                                 @method("PUT")
                                 <input type="hidden" name="status" value="1">
-                                <button type="submit" class="btn btn-outline-success">Active Member</button>
+                                <button type="submit" class="btn btn-sm btn-outline-success">Active Member</button>
                             </form>
                         </div>
                     @endif

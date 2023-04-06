@@ -9,7 +9,7 @@
                     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                         {{ __('Task Detail') }}
                     </h2>
-                    <a class="btn btn-sm btn-outline-primary" href="{{ route('tasks.index') }}"> Back</a>
+                    <a class="btn btn-sm btn-outline-primary" href="{{ route('mytask.index') }}"> Back</a>
                 </div>
                 @if ($message = Session::get('success'))
                 <div class="alert alert-success">
@@ -35,15 +35,28 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <strong>Assigned to:</strong>
-                        @if($task->user_id != 1) {{ $task->user->name }}
-                        @else <?php echo 'None' ?>
-                        @endif
+                        {{ $task->user->name }}
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
                         <strong>Status:</strong>
                         {{ ucfirst($task->status) }}
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <strong>Update status</strong>
+                        <form action="{{ route('mytask.update', $task->id)}}" method="POST">
+                            @csrf
+                            @method('POST')
+                            <select name="status" id="" >
+                                <option value="pending">Peding</option>
+                                <option value="processing">Processing</option>
+                                <option value="complete">Complete</option>
+                            </select>
+                            <button class="btn btn-sm btn-outline-info" type="submit">Update Status</button>
+                        </form>
                     </div>
                 </div>
                 <div class="col-md-12">

@@ -10,7 +10,7 @@
                         {{ __('Profile') }}
                     </h2>
                     <div>
-                        <a class="btn btn-outline-primary" href="{{ route('profile.index') }}">Back</a>
+                        <a class="btn btn-sm btn-outline-primary" href="{{ route('profile.index') }}">Back</a>
                     </div>
                 </div>
                 @if ($message = Session::get('success'))
@@ -33,7 +33,7 @@
                         </div>
                     </div>
                     <div class="col-md-12 text-center">
-                        <button type="submit" class="btn btn-outline-primary">Submit</button>
+                        <button type="submit" class="btn btn-sm btn-outline-primary">Submit</button>
                     </div>
                 </form>
             </div>

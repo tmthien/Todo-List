@@ -2,7 +2,7 @@
 <div class="display-comment" style="padding-left: 3%;">
     <p><strong>{{ $comment->user->name }}</strong>: {{ $comment->body }}</p>
     <div style="color:blue;" class="label" onclick="show('reply{{$comment->id}}')">Reply</div>
-    <form method="post" action="{{ route('reply.add') }}" id="reply{{$comment->id}}" style="display: none;">
+    <form method="post" action="{{ route('replies.create') }}" id="reply{{$comment->id}}" style="display: none;">
         @csrf
         <div class="form-group comment-{{$comment->id}}">
             <input type="text" name="body" class="form-control" />
@@ -31,4 +31,5 @@
         }
     }
 </script>
+
 @endforeach

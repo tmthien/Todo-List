@@ -58,7 +58,7 @@
                     @endif
                 </div>
                 <div class="col-md-12 border">
-                    <form action="{{ route('comment.add') }}" method="POST">
+                    <form action="{{ route('comments.create') }}" method="POST">
                         @csrf
                         <div class="form-group">
                             <strong>Comment:</strong>

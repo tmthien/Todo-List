@@ -26,8 +26,8 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::post('comment/add', [CommentController::class, 'add'])->name('comment.add');
-Route::post('reply/store', [CommentController::class, 'reply'])->name('reply.add');
+Route::post('comments', [CommentController::class, 'add'])->name('comments.create');
+Route::post('replies', [CommentController::class, 'reply'])->name('replies.create');
 
 require __DIR__ . '/auth.php';
 
@@ -37,11 +37,11 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('users', UserController::class);
     
     Route::get('profile',[ProfileController::class, 'index'])->name('profile.index');
-    Route::post('profile/{user}',[ProfileController::class, 'update'])->name('profile.update');
+    Route::put('profile/{user}',[ProfileController::class, 'update'])->name('profile.update');
     Route::get('profile/{user}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
 
-    Route::get('mytask', [MyTaskController::class, 'index'])->name('mytask.index');
-    Route::get('mytask/{id}', [MyTaskController::class, 'show'])->name('mytask.show');
+    Route::get('mytasks', [MyTaskController::class, 'index'])->name('mytasks.index');
+    Route::get('mytasks/{id}', [MyTaskController::class, 'show'])->name('mytasks.show');
+    Route::put('mytasks/{id}', [MyTaskController::class, 'update'])->name('mytasks.update');
     Route::get('tasks/{id}/dowload_file', [TaskController::class, 'downloadFile'])->name('downloadFile');
-    Route::post('mytask/{id}', [MyTaskController::class, 'update'])->name('mytask.update');
   });

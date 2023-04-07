@@ -20,6 +20,7 @@
                 @endif
                 <form method="POST" action="{{ route('profile.update',auth()->id()) }}">
                     @csrf
+                    @method('PUT')
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">

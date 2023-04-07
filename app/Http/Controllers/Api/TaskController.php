@@ -28,13 +28,7 @@ class TaskController extends Controller
             'description' => 'required',
             'file' => 'file|mimes:jpg,jpeg,bmp,png,doc,docx,csv,rtf,xlsx,xls,txt,pdf,zip',
         ]);
-        // if (!$request->has('file')) {
-        //     return response()->json(['message' => 'Missing file'], 422);
-        // };
-
-        // $file = $request->file;
-        // $name = Str::random(10);
-        // $url = Storage::putFileAs('files', $file, $name . '.' . $file->extension());
+        
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
@@ -42,7 +36,6 @@ class TaskController extends Controller
         $task = Task::create([
             'title' => $request->input('title'),
             'description' => $request->input('description'),
-            // 'file' => $url,
         ]);
 
         return response()->json([

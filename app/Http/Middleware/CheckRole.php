@@ -17,9 +17,6 @@ class CheckRole
      */
     public function handle(Request $request, Closure $next)
     {
-        // $token = $request->bearerToken();
-        // $role = Auth::user()->role;
-        // $user = User::where
         if (auth('api')->user()->role == 0) {
             return $next($request);
         }

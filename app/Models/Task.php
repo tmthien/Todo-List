@@ -17,13 +17,27 @@ class Task extends Model
         'file',
         'status'
     ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
+
     public function comments()
     {
         return $this->morphMany(Comment::class, 'commentable')->whereNull('parent_id');
     }
 
+    public function unAssign(){
+        $tasks = Task::all();
+        foreach($tasks as $task) {
+            if($task->user_id == 1) return true;
+            else return false;
+        }
+    }
+    
+    public function checkMyTask() {
+        if($this->user_id == auth()->user()->id) return true;
+        else return false;
+    }
 }

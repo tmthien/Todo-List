@@ -7,11 +7,8 @@
             <div class="p-6 bg-white border-b border-gray-200">
                 <div style="display: flex; justify-content: space-between; padding-bottom: 10px;">
                     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                        {{ __('Tasks List') }}
+                        {{ __('My Tasks List') }}
                     </h2>
-                    @if($user->role == 0)
-                    <a class="btn btn-sm btn-outline-success" href="{{ route('tasks.create') }}">Add new task</a>
-                    @endif
                 </div>
                 @if ($message = Session::get('success'))
                 <div class="alert alert-success">
@@ -28,7 +25,7 @@
                         <th width="50px"></th>
                     </tr>
                     @foreach ($tasks as $task)
-                        @if($task->user_id == auth()->id())
+                        @if($task->checkMyTask())
                         <tr>
                             <td>{{ ++$i }}</td>
                             <td>{{ $task->title }}</td> 

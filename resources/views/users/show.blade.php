@@ -30,8 +30,8 @@
                         {{ $user->email }}
                     </div>
                 </div>
-                @if($roleUser->role == 0)
-                    @if($user->id !=1 && $user->status == 1)
+                @if(auth()->user()->isAdmin())
+                    @if($user->notAdmin() && $user->actived())
                         <div class="col-md-12 text-center">
                             <form action="{{ route('users.update',$user->id) }}" method="POST">
                                 @csrf
@@ -41,7 +41,7 @@
                             </form>
                         </div>
                     @endif
-                    @if($user->status == 0)
+                    @if(!$user->actived())
                         <div class="col-md-12 text-center">
                             <form action="{{ route('users.update',$user->id) }}" method="POST">
                                 @csrf

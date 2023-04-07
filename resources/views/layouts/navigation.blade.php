@@ -16,7 +16,7 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
-                @if(Auth::user()->role == 0 )
+                @if(Auth::user()->isAdmin())
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
                             {{ __('Member') }}
@@ -28,7 +28,7 @@
                         {{ __('All Task') }}
                     </x-nav-link>
                 </div>
-                @if(Auth::user()->role == 1 )
+                @if(Auth::user()->isMember())
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link :href="route('mytasks.index')" :active="request()->routeIs('mytasks.index')">
                             {{ __('My Task') }}

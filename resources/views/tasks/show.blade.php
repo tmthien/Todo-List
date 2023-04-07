@@ -35,8 +35,8 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <strong>Assigned to:</strong>
-                        @if($task->user_id != 1) {{ $task->user->name }}
-                        @else <?php echo 'None' ?>
+                        @if($task->unAssign()) <?php echo 'None' ?>
+                        @else {{ $task->user->name }}
                         @endif
                     </div>
                 </div>

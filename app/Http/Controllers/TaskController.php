@@ -56,7 +56,6 @@ class TaskController extends Controller
         if (!$request->has('file')) {
             return response()->json(['message' => 'Missing file'], 422);
         };
-        // dd($request->file);
         $file = $request->file;
         $name = Str::random(10);
         $url = Storage::putFileAs('files', $file, $name . '.' . $file->extension());
@@ -79,7 +78,6 @@ class TaskController extends Controller
     public function show(Task $task)
     {
         $comment = Comment::where('commentable_id', $task->id)->get();
-        // dd($comment);
             return view('tasks.show', compact('task', 'comment'));
     }
 
@@ -106,7 +104,6 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        // dd($request);
         $request->validate([
             'title' => 'required',
             'description' => 'required',

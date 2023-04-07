@@ -32,7 +32,7 @@ class MyTaskController extends Controller
         $task = Task::where('id', $id)->firstOrFail();
         $task->update($request->all());
 
-        return redirect()->route('mytask.index')
+        return redirect()->route('mytasks.index')
             ->with('success', 'Task updated successfully');
     }
 }

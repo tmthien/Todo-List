@@ -9,7 +9,7 @@
                     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                         {{ __('Task Detail') }}
                     </h2>
-                    <a class="btn btn-sm btn-outline-primary" href="{{ route('mytask.index') }}"> Back</a>
+                    <a class="btn btn-sm btn-outline-primary" href="{{ route('mytasks.index') }}"> Back</a>
                 </div>
                 @if ($message = Session::get('success'))
                 <div class="alert alert-success">
@@ -47,9 +47,9 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <strong>Update status</strong>
-                        <form action="{{ route('mytask.update', $task->id)}}" method="POST">
+                        <form action="{{ route('mytasks.update', $task->id)}}" method="POST">
                             @csrf
-                            @method('POST')
+                            @method('PUT')
                             <select name="status" id="" >
                                 <option value="pending">Peding</option>
                                 <option value="processing">Processing</option>
@@ -71,7 +71,7 @@
                     @endif
                 </div>
                 <div class="col-md-12 border">
-                    <form action="{{ route('comment.add') }}" method="POST">
+                    <form action="{{ route('comments.create') }}" method="POST">
                         @csrf
                         <div class="form-group">
                             <strong>Comment:</strong>

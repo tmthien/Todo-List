@@ -31,14 +31,14 @@
                         @if($task->user_id == auth()->id())
                         <tr>
                             <td>{{ ++$i }}</td>
-                            <td>{{ $task->title }}</td> {{-- Hiển thị title trong bảng task --}}
+                            <td>{{ $task->title }}</td> 
                             <td>
-                                <?php echo $task->description?> {{-- Hiển thị description trong bảng task --}}
+                                <?php echo $task->description?> 
                             </td> 
                             <td>{{ $task->user->name }}</td>
-                            <td>{{ ucfirst($task->status) }}</td> {{-- Hiển thị status trong bảng task --}}
+                            <td>{{ ucfirst($task->status) }}</td> 
                             <td>
-                                <a class="btn btn-sm btn-outline-info" href="{{ route('mytask.show',$task->id) }}"><i class="fa-regular fa-eye"></i></a>
+                                <a class="btn btn-sm btn-outline-info" href="{{ route('mytasks.show',$task->id) }}"><i class="fa-regular fa-eye"></i></a>
                             </td>
                         </tr>
                         @endif

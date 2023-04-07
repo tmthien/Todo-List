@@ -19,7 +19,6 @@ class MyTaskController extends Controller
     public function show($id)
     {
         $tasks = Task::where('id', $id)->get();
-        $user = User::get();
         foreach($tasks as $task){
             $comment = Comment::where('commentable_id', $task->id)->get();
         }

@@ -24,4 +24,16 @@ class UserController extends Controller
             'Users' => $user,
         ]);
     }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $user = User::find($id);
+        $user->update([
+            'status' => $request->status,
+        ]);
+        return response()->json([
+            'massage' => 'Update status user Successfully',
+            'User' => $user,
+        ]);
+    }
 }

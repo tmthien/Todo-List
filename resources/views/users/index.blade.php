@@ -26,12 +26,12 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>
-                            @if($user->role == 1) {{ __('Member') }}
-                            @else {{ __('Admin') }}
+                            @if($user->roleAdmin()) {{ __('Aadmin') }}
+                            @else {{ __('Member') }}
                             @endif
                         </td>
                         <td>
-                            @if($user->status == 1) <?php echo '<i style="color: #26bc2f;" class="fa-solid fa-circle-check"></i>'?>
+                            @if($user->actived()) <?php echo '<i style="color: #26bc2f;" class="fa-solid fa-circle-check"></i>'?>
                             @else <?php echo '<i style="color:red;" class="fa-solid fa-circle-xmark"></i>'?>
                             @endif
                         </td>

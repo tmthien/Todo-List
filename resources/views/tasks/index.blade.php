@@ -9,7 +9,7 @@
                     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                         {{ __('Tasks List') }}
                     </h2>
-                    @if($user->role == 0)
+                    @if(auth()->user()->isAdmin())
                         <a class="btn btn-sm btn-outline-success" href="{{ route('tasks.create') }}">Add new task</a>
                     @endif
                 </div>
@@ -30,18 +30,18 @@
                     @foreach ($tasks as $task)
                     <tr>
                         <td>{{ ++$i }}</td>
-                        <td>{{ $task->title }}</td> {{-- Hiển thị title trong bảng task --}}
-                        <td><?php echo $task->description ?></td> {{-- Hiển thị description trong bảng task --}}
+                        <td>{{ $task->title }}</td>
+                        <td><?php echo $task->description ?></td> 
                         <td> 
-                            @if($task->user_id != 1) {{ $task->user->name }}
-                            @else <?php echo 'None' ?>
+                            @if($task->unAssign()) <?php echo 'None' ?>
+                            @else {{ $task->user->name }}
                             @endif
                         </td>
-                        <td>{{ ucfirst($task->status) }}</td> {{-- Hiển thị status trong bảng task --}}
+                        <td>{{ ucfirst($task->status) }}</td> 
                         <td>
                             <form action="{{ route('tasks.destroy',$task->id) }}" method="POST">
                                 <a class="btn btn-sm btn-outline-info" href="{{ route('tasks.show',$task->id) }}"><i class="fa-regular fa-eye"></i></a>
-                                @if($user->role == 0)
+                                @if(auth()->user()->isAdmin())
                                     <a class="btn btn-sm btn-outline-primary" href="{{ route('tasks.edit',$task->id) }}"><i class="fa-sharp fa-regular fa-pen-to-square"></i></a>
                                     @csrf
                                     @method('DELETE')

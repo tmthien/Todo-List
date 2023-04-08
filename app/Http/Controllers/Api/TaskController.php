@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreTaskRequest;
 use Illuminate\Http\Request;
 use App\Models\Task;
 use Illuminate\Support\Facades\Validator;
@@ -21,18 +22,8 @@ class TaskController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(StoreTaskRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'title' => 'required',
-            'description' => 'required',
-            'file' => 'file|mimes:jpg,jpeg,bmp,png,doc,docx,csv,rtf,xlsx,xls,txt,pdf,zip',
-        ]);
-        
-        if ($validator->fails()) {
-            return response()->json($validator->errors()->toJson(), 400);
-        }
-        
         $task = Task::create([
             'title' => $request->input('title'),
             'description' => $request->input('description'),
@@ -52,13 +43,8 @@ class TaskController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id) {
+    public function update(StoreTaskRequest $request, $id) {
         $task = Task::find($id);
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-        ]);
- 
         $task->update($request->all());
  
         return response()->json([

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTaskRequest;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -45,25 +46,24 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTaskRequest $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'file' => 'file|mimes:jpg,jpeg,bmp,png,doc,docx,csv,rtf,xlsx,xls,txt,pdf,zip',
-        ]);
-
-        if (!$request->has('file')) {
-            return response()->json(['message' => 'Missing file'], 422);
-        };
-        $file = $request->file;
-        $name = Str::random(10);
-        $url = Storage::putFileAs('files', $file, $name . '.' . $file->extension());
-        Task::create([
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
-            'file' => $url,
-        ]);
+        if ($request->has('file')) {
+            $file = $request->file;
+            $name = Str::random(10);
+            $url = Storage::putFileAs('files', $file, $name . '.' . $file->extension());
+            Task::create([
+                'title' => $request->input('title'),
+                'description' => $request->input('description'),
+                'file' => $url,
+            ]);
+        }
+        else {
+            Task::create([
+                'title' => $request->input('title'),
+                'description' => $request->input('description'),
+            ]);
+        }
 
         return redirect()->route('tasks.index')
             ->with('success', 'Task created successfully.');
@@ -102,13 +102,8 @@ class TaskController extends Controller
      * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Task $task)
+    public function update(StoreTaskRequest $request, Task $task)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-        ]);
-
         $task->update($request->all());
 
         return redirect()->route('tasks.index')

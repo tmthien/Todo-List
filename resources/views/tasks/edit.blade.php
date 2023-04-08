@@ -52,6 +52,12 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <strong>File:</strong>
+                                <a href="{{ route('downloadFile', $task->id) }}">{{ $task->file }}</a> 
+                            </div>
+                        </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                             <button type="submit" class="btn btn-outline-primary">Submit</button>
                         </div>

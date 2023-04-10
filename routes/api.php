@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\MyTaskController;
 use App\Http\Controllers\API\TaskController;
+use App\Http\Controllers\Api\TypeController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -37,7 +38,7 @@ Route::group(['middleware' => 'auth:api','prefix' => 'tasks'], function(){
     Route::group(['middleware'=>'checkrole'], function(){
         Route::delete('delete/{id}',[TaskController::class, 'destroy']);
         Route::post('create', [TaskController::class, 'store']);
-        Route::put('update/{id}', [TaskController::class, 'update']);
+        Route::post('update/{id}', [TaskController::class, 'update']);
     });
 });
 Route::group(['middleware' => 'auth:api', 'prefix' => 'users'], function(){
@@ -50,4 +51,12 @@ Route::group(['middleware' => 'auth:api','prefix' => 'mytasks'], function(){
     Route::get('index', [MyTaskController::class, 'index']);
     Route::get('show/{id}', [MyTaskController::class, 'show']);
     Route::put('update/{id}', [MyTaskController::class, 'update']);
+});
+
+Route::group(['middleware' => 'auth:api' ,'prefix' => 'types'], function(){
+    Route::get('', [TypeController::class, 'index']);
+    Route::post('create',[TypeController::class, 'store']);
+    Route::get('/{id}', [TypeController::class, 'show']);
+    Route::put('/{id}', [TypeController::class, 'update']);
+    Route::delete('/{id}', [TypeController::class, 'destroy']);
 });

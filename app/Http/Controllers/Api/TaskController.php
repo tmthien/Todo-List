@@ -31,12 +31,16 @@ class TaskController extends Controller
                 'title' => $request->input('title'),
                 'description' => $request->input('description'),
                 'file' => $url,
+                'user_id' => $request->input('user_id'),
+                'type_id'=> $request->input('type_id'),
             ]);
         }
         else {
             $task = Task::create([
                 'title' => $request->input('title'),
                 'description' => $request->input('description'),
+                'user_id' => $request->input('user_id'),
+                'type_id'=> $request->input('type_id'),
             ]);
         }
 
@@ -58,7 +62,28 @@ class TaskController extends Controller
 
     public function update(StoreTaskRequest $request, $id) {
         $task = Task::find($id);
-        $task->update($request->all());
+        if ($request->has('file')) {
+            $file = $request->file;
+            $name = Str::random(10);
+            $url = Storage::putFileAs('files', $file, $name . '.' . $file->extension());
+            $task->update([
+                'title' => $request->input('title'),
+                'description' => $request->input('description'),
+                'file' => $url,
+                'user_id' => $request->input('user_id'),
+                'type_id'=> $request->input('type_id'),
+            ]);
+        }
+        else {
+            $task->update([
+                'title' => $request->input('title'),
+                'description' => $request->input('description'),
+                'user_id' => $request->input('user_id'),
+                'type_id'=> $request->input('type_id'),
+            ]);
+        }
+        // $task = Task::find($id);
+        // $task->update($request->all());
  
         return response()->json([
             "msg" => "Task updated successfully",

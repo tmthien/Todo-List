@@ -46,4 +46,4 @@ Route::middleware(['auth'])->group(function () {
     Route::get('mytasks/{id}', [MyTaskController::class, 'show'])->name('mytasks.show');
     Route::put('mytasks/{id}', [MyTaskController::class, 'update'])->name('mytasks.update');
     Route::get('tasks/{id}/dowload_file', [TaskController::class, 'downloadFile'])->name('downloadFile');
-  });
+});

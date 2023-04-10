@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use App\Models\Task;
 use App\Models\Type;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Gate;
 
@@ -20,12 +21,26 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->input('search');
         $user = User::all();
-        $tasks = Task::paginate(5);
-        return view('tasks.index', compact('tasks', 'user'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+        if($search){
+            $tasks = Task::join('users', 'users.id', '=', 'tasks.user_id')->join('types', 'tasks.type_id', '=', 'types.id')
+                ->select('tasks.*', 'users.name as username', 'types.name as typename')
+                ->where('title', 'like', '%'.$search.'%')
+                ->orWhere('description', 'LIKE', '%'.$search.'%')
+                ->orWhere('users.name', 'LIKE', '%'.$search.'%')
+                ->orWhere('types.name', 'LIKE', '%'.$search.'%')
+                ->orWhere('tasks.status', 'LIKE', '%'.$search.'%')
+                ->orderBy('created_at', 'desc')->paginate(5);
+            return view('tasks.index', compact('tasks', 'user'))->with('i', (request()->input('page', 1) - 1) * 5);
+        }
+        else {
+            $tasks = Task::paginate(5);
+            return view('tasks.index', compact('tasks', 'user'))
+                ->with('i', (request()->input('page', 1) - 1) * 5);
+        }
     }
 
     /**
@@ -136,4 +151,5 @@ class TaskController extends Controller
         $pathToFile = storage_path('app\\' . $task->file);
         return response()->download($pathToFile);
     }
+    
 }

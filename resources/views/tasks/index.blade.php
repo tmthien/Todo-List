@@ -9,6 +9,14 @@
                     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                         {{ __('Tasks List') }}
                     </h2>
+                    <form action="{{ route('tasks.index') }}" method="GET">
+                        <div class="input-group">
+                            <div class="form-outline">
+                                <input type="text" name="search" class="form-control rounded" />
+                            </div>
+                            <button type="submit" class="btn btn-outline-dark"><i class="fas fa-search"></i></button>
+                        </div>
+                    </form>
                     @if(auth()->user()->isAdmin())
                         <a class="btn btn-sm btn-outline-success" href="{{ route('tasks.create') }}">Add new task</a>
                     @endif
@@ -30,7 +38,7 @@
                     </tr>
                     @foreach ($tasks as $task)
                     <tr>
-                        <td>{{ ++$i }}</td>
+                        <td>{{ $task->id }}</td>
                         <td>{{ $task->title }}</td>
                         <td><?php echo $task->description ?></td> 
                         <td> 
@@ -52,8 +60,6 @@
                     </tr>
                     @endforeach
                 </table>
-                {!! $tasks->links() !!}
-
             </div>
         </div>
     </div>

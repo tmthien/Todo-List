@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\MyTaskController;
+use App\Http\Controllers\TypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('tasks', TaskController::class);    
  
     Route::resource('users', UserController::class);
+
+    Route::resource('types', TypeController::class)->middleware('checkadmin');
     
     Route::get('profile',[ProfileController::class, 'index'])->name('profile.index');
     Route::put('profile/{user}',[ProfileController::class, 'update'])->name('profile.update');

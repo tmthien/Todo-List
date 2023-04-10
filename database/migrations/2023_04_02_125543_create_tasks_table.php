@@ -21,6 +21,7 @@ class CreateTasksTable extends Migration
             $table->text('description')->nullable();
             $table->string('status')->default(StatusTask::Pending);
             $table->string('file')->nullable();
+            $table->tinyInteger('type_id');
             $table->tinyInteger('user_id');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));

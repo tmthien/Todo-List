@@ -42,6 +42,26 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
+                                <strong>Type of Task:</strong>
+                                <select class="form-control" name="type_id">
+                                    @foreach($types as $type)
+                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                            <strong>Assign:</strong>
+                                <select name="user_id" class="form-control">
+                                    @foreach($users as $user)
+                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
                                 <strong>Upload File:</strong>
                                 <input type="file" name="file" class="form-control" accept=".jpg,.jpeg,.bmp,.png,.gif,.doc,.docx,.csv,.rtf,.xlsx,.xls,.txt,.pdf,.zip">
                             </div>

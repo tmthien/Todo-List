@@ -8,6 +8,7 @@ use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\Task;
+use App\Models\Type;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Gate;
@@ -21,7 +22,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $user = auth()->user();
+        $user = User::all();
         $tasks = Task::paginate(5);
         return view('tasks.index', compact('tasks', 'user'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
@@ -32,11 +33,12 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Task $task)
     {
-        $user = User::get();
-        if (Gate::allows('isAdmin', $user)) {
-            return view('tasks.create');
+        $types = Type::get();
+        $users = User::get();
+        if (Gate::allows('isAdmin', $users)) {
+            return view('tasks.create', compact('types','users', 'task'));
         }
     }
 
@@ -56,14 +58,16 @@ class TaskController extends Controller
                 'title' => $request->input('title'),
                 'description' => $request->input('description'),
                 'file' => $url,
-                'user_id' => auth()->user()->id,
+                'user_id' => $request->input('user_id'),
+                'type_id' => $request->input('type_id'),
             ]);
         }
         else {
             Task::create([
                 'title' => $request->input('title'),
                 'description' => $request->input('description'),
-                'user_id' => auth()->user()->id,
+                'user_id' => $request->input('user_id'),
+                'type_id' => $request->input('type_id'),
             ]);
         }
 
@@ -91,9 +95,10 @@ class TaskController extends Controller
      */
     public function edit(Task $task, User $users)
     {
+        $types = Type::get();
         $users = User::get();
         if(Gate::allows('isAdmin', $users)){
-            return view('tasks.edit', compact('task', 'users'));
+            return view('tasks.edit', compact('task', 'users', 'types'));
         }
     }
 

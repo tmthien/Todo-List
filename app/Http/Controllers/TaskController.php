@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -10,7 +11,6 @@ use App\Models\Task;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Gate;
-
 
 class TaskController extends Controller
 {
@@ -56,12 +56,14 @@ class TaskController extends Controller
                 'title' => $request->input('title'),
                 'description' => $request->input('description'),
                 'file' => $url,
+                'user_id' => auth()->user()->id,
             ]);
         }
         else {
             Task::create([
                 'title' => $request->input('title'),
                 'description' => $request->input('description'),
+                'user_id' => auth()->user()->id,
             ]);
         }
 
@@ -77,7 +79,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        $comment = Comment::where('commentable_id', $task->id)->get();
+        $comment = Comment::where('task_id', $task->id)->get();
             return view('tasks.show', compact('task', 'comment'));
     }
 
@@ -102,10 +104,9 @@ class TaskController extends Controller
      * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreTaskRequest $request, Task $task)
-    {
-        $task->update($request->all());
-
+    public function update(UpdateTaskRequest $request, Task $task)
+    {   
+        $task->update($request->input());
         return redirect()->route('tasks.index')
             ->with('success', 'Task updated successfully');
     }

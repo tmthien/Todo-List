@@ -26,8 +26,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::post('comments', [CommentController::class, 'add'])->name('comments.create');
-Route::post('replies', [CommentController::class, 'reply'])->name('replies.create');
+Route::post('comments', [CommentController::class, 'store'])->name('comments.create');
 
 require __DIR__ . '/auth.php';
 

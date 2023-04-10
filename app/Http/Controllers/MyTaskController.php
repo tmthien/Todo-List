@@ -20,7 +20,7 @@ class MyTaskController extends Controller
     {
         $tasks = Task::where('id', $id)->get();
         foreach($tasks as $task){
-            $comment = Comment::where('commentable_id', $task->id)->get();
+            $comment = Comment::where('task_id', $task->id)->get();
         }
             return view('tasks.mytask_show', compact('task', 'comment'));
     }

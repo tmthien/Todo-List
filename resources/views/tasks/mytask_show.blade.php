@@ -40,6 +40,12 @@
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
+                        <strong>Type of Task:</strong>
+                        {{ $task->type->name }}
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
                         <strong>Status:</strong>
                         {{ ucfirst($task->status) }}
                     </div>
@@ -50,12 +56,12 @@
                         <form action="{{ route('mytasks.update', $task->id)}}" method="POST">
                             @csrf
                             @method('PUT')
-                            <select name="status" id="" >
+                            <select name="status" id="" class="form-control">
                                 <option value="pending">Peding</option>
                                 <option value="processing">Processing</option>
                                 <option value="complete">Complete</option>
                             </select>
-                            <button class="btn btn-sm btn-outline-info" type="submit">Update Status</button>
+                            <button class="m-3 btn btn-sm btn-outline-info" type="submit">Update Status</button>
                         </form>
                     </div>
                 </div>

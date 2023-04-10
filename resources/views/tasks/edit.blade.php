@@ -29,19 +29,19 @@
                     @method('PUT')
                     
                     <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <strong>Title:</strong>
                                 <input type="text" name="title" value="{{ $task->title }}" class="form-control" placeholder="Title">
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <strong>Description:</strong>
                                 <textarea class="form-control ckeditor" style="height:150px" name="description" placeholder="Description">{{ $task->description }}</textarea>
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <strong>Assign:</strong>
                                 <select name="user_id" class="form-control">
@@ -53,11 +53,21 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
+                                <strong>Type of Task:</strong>
+                                <select name="type_id" class="form-control">
+                                    @foreach($types as $type)
+                                        <option value="{{ $type->id }}" {{ ( $task->type_id == $type->id) ? 'selected' : '' }}  >{{ $type->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
                                 <strong>File:</strong>
                                 <a href="{{ route('downloadFile', $task->id) }}">{{ $task->file }}</a> 
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                        <div class="col-md-12 text-center">
                             <button type="submit" class="btn btn-outline-primary">Submit</button>
                         </div>
                     </div>

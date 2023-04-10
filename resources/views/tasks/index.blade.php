@@ -24,6 +24,7 @@
                         <th>Name</th>
                         <th>Details</th>
                         <th>Assign</th>
+                        <th>Type of Task</th>
                         <th>Status</th>
                         <th width="130px"></th>
                     </tr>
@@ -33,10 +34,9 @@
                         <td>{{ $task->title }}</td>
                         <td><?php echo $task->description ?></td> 
                         <td> 
-                            @if($task->unAssign()) <?php echo 'None' ?>
-                            @else {{ $task->user->name }}
-                            @endif
+                           {{ $task->user->name }}
                         </td>
+                        <td>{{ $task->type->name }}</th>
                         <td>{{ ucfirst($task->status) }}</td> 
                         <td>
                             <form action="{{ route('tasks.destroy',$task->id) }}" method="POST">

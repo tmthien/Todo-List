@@ -20,6 +20,7 @@
                         <th>No</th>
                         <th>Name</th>
                         <th>Details</th>
+                        <th>Type of Task</th>
                         <th>Assign</th>
                         <th>Status</th>
                         <th width="50px"></th>
@@ -32,6 +33,7 @@
                             <td>
                                 <?php echo $task->description?> 
                             </td> 
+                            <td>{{ $task->type->name }}</td>
                             <td>{{ $task->user->name }}</td>
                             <td>{{ ucfirst($task->status) }}</td> 
                             <td>

@@ -35,9 +35,13 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <strong>Assigned to:</strong>
-                        @if($task->unAssign()) <?php echo 'None' ?>
-                        @else {{ $task->user->name }}
-                        @endif
+                        {{ $task->user->name }}
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <strong>Type of Task:</strong>
+                        {{ $task->type->name }}
                     </div>
                 </div>
                 <div class="col-md-12">

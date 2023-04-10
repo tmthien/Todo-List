@@ -15,12 +15,18 @@ class Task extends Model
         'description',
         'user_id',
         'file',
-        'status'
+        'status',
+        'type_id',
     ];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function type(): BelongsTo
+    {
+        return $this->belongsTo(Type::class);
     }
 
     public function comments()

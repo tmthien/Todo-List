@@ -27,7 +27,7 @@
                 <form action="{{ route('tasks.update',$task->id) }}" method="POST">
                     @csrf
                     @method('PUT')
-
+                    
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="form-group">
@@ -45,9 +45,8 @@
                             <div class="form-group">
                                 <strong>Assign:</strong>
                                 <select name="user_id" class="form-control">
-                                    <option>{{$task->user->name}}</option>
                                     @foreach($users as $user)
-                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                        <option value="{{ $user->id }}" {{ ( $task->user_id == $user->id) ? 'selected' : '' }}  >{{ $user->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

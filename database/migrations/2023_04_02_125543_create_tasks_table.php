@@ -3,6 +3,7 @@
 use App\Enums\StatusTask;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreateTasksTable extends Migration
@@ -17,11 +18,13 @@ class CreateTasksTable extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->string('status')->default(StatusTask::Pending);
             $table->string('file')->nullable();
-            $table->tinyInteger('user_id')->default(1);
-            $table->timestamps();
+            $table->tinyInteger('user_id');
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
+
         });
     }
 

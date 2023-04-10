@@ -12,8 +12,7 @@ class Comment extends Model
         'user_id',
         'parent_id',
         'body',
-        'commentable_id',
-        'commentable_type'
+        'task_id',
     ];
     
     public function user()

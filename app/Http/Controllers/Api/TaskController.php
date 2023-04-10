@@ -4,9 +4,8 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTaskRequest;
-use Illuminate\Http\Request;
+use App\Models\Comment;
 use App\Models\Task;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -24,10 +23,22 @@ class TaskController extends Controller
 
     public function store(StoreTaskRequest $request)
     {
-        $task = Task::create([
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
-        ]);
+        if ($request->has('file')) {
+            $file = $request->file;
+            $name = Str::random(10);
+            $url = Storage::putFileAs('files', $file, $name . '.' . $file->extension());
+            $task = Task::create([
+                'title' => $request->input('title'),
+                'description' => $request->input('description'),
+                'file' => $url,
+            ]);
+        }
+        else {
+            $task = Task::create([
+                'title' => $request->input('title'),
+                'description' => $request->input('description'),
+            ]);
+        }
 
         return response()->json([
             'message' => 'Task successfully created',
@@ -37,9 +48,11 @@ class TaskController extends Controller
 
     public function show($id){
         $task = Task::where('id', $id)->firstOrFail();
+        $comment = Comment::where('task_id', $task->id)->get();
         return response()->json([
             'message' => 'Show detail task',
             'task' => $task,
+            'comment' => $comment,
         ]);
     }
 

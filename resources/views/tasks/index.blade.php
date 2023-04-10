@@ -60,6 +60,7 @@
                     </tr>
                     @endforeach
                 </table>
+                {!! $tasks->links() !!}
             </div>
         </div>
     </div>

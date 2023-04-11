@@ -35,13 +35,13 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <strong>Assigned to:</strong>
-                        {{ $task->user->name }}
+                        {{ optional($task->user)->name }}
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
                         <strong>Type of Task:</strong>
-                        {{ $task->type->name }}
+                        {{ optional($task->type)->name }}
                     </div>
                 </div>
                 <div class="col-md-12">

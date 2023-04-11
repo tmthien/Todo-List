@@ -10,11 +10,16 @@ use App\Models\Type;
 
 class MyTaskController extends Controller
 {
+    private Task $task;
+    public function __construct(Task $task) 
+    {
+        $this->task = $task;
+    }
+    
     public function index() {
-        $type = Type::get();
-        $user = auth()->user();
-        $tasks = Task::paginate(5);
-        return view('tasks.mytask', compact('tasks', 'user', 'type'))
+        $user_id = auth()->user()->id;
+        $tasks = Task::where('user_id', $user_id)->paginate(5);
+        return view('tasks.mytask', compact('tasks'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -30,7 +35,6 @@ class MyTaskController extends Controller
 
     public function update(Request $request, $id)
     {
-
         $task = Task::where('id', $id)->firstOrFail();
         $task->update($request->all());
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Repositories\Type;
+namespace App\Repositories\Task;
 
 use Illuminate\Http\Request;
 
-interface TypeRepositoryInterface
+interface TaskRepositoryInterface
 {
     public function index();
     public function show($id);

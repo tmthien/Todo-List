@@ -33,29 +33,30 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($route) {
 
 
 Route::group(['middleware' => 'auth:api','prefix' => 'tasks'], function(){
-    Route::get('index', [TaskController::class, 'index']);
-    Route::get('show/{id}', [TaskController::class, 'show']);
+    Route::get('', [TaskController::class, 'index']);
+    Route::get('/{id}', [TaskController::class, 'show']);
     Route::group(['middleware'=>'checkrole'], function(){
-        Route::delete('delete/{id}',[TaskController::class, 'destroy']);
+        Route::delete('/{id}',[TaskController::class, 'destroy']);
         Route::post('create', [TaskController::class, 'store']);
         Route::post('update/{id}', [TaskController::class, 'update']);
     });
 });
+
 Route::group(['middleware' => 'auth:api', 'prefix' => 'users'], function(){
-    Route::get('index', [UserController::class, 'index']);
-    Route::get('show/{id}', [UserController::class, 'show']);
-    Route::put('update/{id}', [UserController::class, 'updateStatus'])->middleware('checkrole');
+    Route::get('', [UserController::class, 'index']);
+    Route::get('/{id}', [UserController::class, 'show']);
+    Route::put('/{id}', [UserController::class, 'update']);
 });
 
 Route::group(['middleware' => 'auth:api','prefix' => 'mytasks'], function(){
-    Route::get('index', [MyTaskController::class, 'index']);
-    Route::get('show/{id}', [MyTaskController::class, 'show']);
-    Route::put('update/{id}', [MyTaskController::class, 'update']);
+    Route::get('', [MyTaskController::class, 'index']);
+    Route::get('/{id}', [MyTaskController::class, 'show']);
+    Route::put('/{id}', [MyTaskController::class, 'update']);
 });
 
 Route::group(['middleware' => 'auth:api' ,'prefix' => 'types'], function(){
     Route::get('', [TypeController::class, 'index']);
-    Route::post('create',[TypeController::class, 'store']);
+    Route::post('',[TypeController::class, 'store']);
     Route::get('/{id}', [TypeController::class, 'show']);
     Route::put('/{id}', [TypeController::class, 'update']);
     Route::delete('/{id}', [TypeController::class, 'destroy']);

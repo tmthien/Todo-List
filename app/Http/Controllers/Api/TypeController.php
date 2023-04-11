@@ -5,10 +5,18 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TypeResource;
 use App\Models\Type;
+use App\Repositories\Type\TypeRepositoryInterface;
 use Illuminate\Http\Request;
 
 class TypeController extends Controller
 {
+    private TypeRepositoryInterface $typeRepository;
+
+    public function __construct(TypeRepositoryInterface $typeRepository) 
+    {
+        $this->typeRepository = $typeRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +24,7 @@ class TypeController extends Controller
      */
     public function index()
     {
-        $types = Type::all();
+        $types = $this->typeRepository->index();
         return response()->json([
             TypeResource::collection($types), 
             'Get list type Successfully.'
@@ -31,9 +39,7 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
-        $type = Type::create([
-            'name' => $request->input('name'),
-        ]);
+        $type = $this->typeRepository->store($request);
         return response()->json(['Type created successfully.', new TypeResource($type)]);
     }
 
@@ -45,7 +51,7 @@ class TypeController extends Controller
      */
     public function show($id)
     {
-        $type = Type::find($id);
+        $type = $this->typeRepository->show($id);
         if(is_null($type)){
             return response()->json('Type not found', 404);
         }
@@ -61,10 +67,7 @@ class TypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $type = Type::find($id);
-        $type->update([
-            'name' => $request->name,
-        ]);
+        $type = $this->typeRepository->update($request, $id);
         if(is_null($type)){
             return response()->json('Update type failed', 404);
         }
@@ -79,8 +82,7 @@ class TypeController extends Controller
      */
     public function destroy($id)
     {
-        $type = Type::findOrFail($id);
-        $type->delete();
+        $this->typeRepository->destroy($id);
         return response()->json('Type deleted successfully');
     }
 }

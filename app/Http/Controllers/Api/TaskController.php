@@ -4,6 +4,8 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTaskRequest;
+use App\Http\Resources\CommentResource;
+use App\Http\Resources\TaskResource;
 use App\Models\Comment;
 use App\Models\Task;
 use Illuminate\Support\Facades\Storage;
@@ -16,8 +18,8 @@ class TaskController extends Controller
     {
         $tasks = Task::all();
         return response()->json([
-            'message' => 'Get task list Successfully',
-            'task' => $tasks
+            TaskResource::collection($tasks), 
+            'Get list task Successfully.'
         ]);
     }
 
@@ -44,19 +46,16 @@ class TaskController extends Controller
             ]);
         }
 
-        return response()->json([
-            'message' => 'Task successfully created',
-            'task' => $task
-        ]);
+        return response()->json(['Task created successfully.', new TaskResource($task)]);
     }
 
     public function show($id){
-        $task = Task::where('id', $id)->firstOrFail();
-        $comment = Comment::where('task_id', $task->id)->get();
+        $task = Task::findOrFail($id);
+        $comment = Comment::where('task_id', $task->id)->first();
         return response()->json([
-            'message' => 'Show detail task',
-            'task' => $task,
-            'comment' => $comment,
+            'task' => new TaskResource($task), 
+            'comment' => new CommentResource($comment),
+            'Get list task Successfully.'
         ]);
     }
 
@@ -85,18 +84,13 @@ class TaskController extends Controller
         // $task = Task::find($id);
         // $task->update($request->all());
  
-        return response()->json([
-            "msg" => "Task updated successfully",
-            "task" => $task,
-        ]);
+        return response()->json(['Task updated successfully.', new TaskResource($task)]);
     }
 
     public function destroy($id){
         $task = Task::findOrFail($id);
         $task->delete();
-        return response()->json([
-            'massage' => 'Delete Task successfully',
-        ]);
+        return response()->json('Task deleted successfully');
     }
 
 }

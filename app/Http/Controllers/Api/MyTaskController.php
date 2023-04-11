@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CommentResource;
+use App\Http\Resources\TaskResource;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Models\Task;
 
@@ -10,18 +13,20 @@ class MyTaskController extends Controller
 {
     public function index() {
         $user_id = auth('api')->user()->id;
-        $task = Task::where('user_id', $user_id)->get();
+        $tasks = Task::where('user_id', $user_id)->get();
         return response()->json([
-            'massage'=>'Get list task Successfully',
-            'Task' => $task
+            TaskResource::collection($tasks), 
+            'Get list task Successfully.'
         ]);
     }
 
     public function show($id) {
         $task = Task::find($id);
+        $comment = Comment::where('task_id', $task->id)->first();
         return response()->json([
-            'massage'=>'Get detail task Successfully',
-            'Task' => $task
+            'task' => new TaskResource($task), 
+            'comment' => new CommentResource($comment),
+            'Get list task Successfully.'
         ]);
     }
 
@@ -30,9 +35,6 @@ class MyTaskController extends Controller
         $task->update([
             'status'=> $request->status
         ]);
-        return response()->json([
-            'massage' => 'Update status user Successfully',
-            'task' => $task,
-        ]);
+        return response()->json(['Task updated successfully.', new TaskResource($task)]);
     }
 }

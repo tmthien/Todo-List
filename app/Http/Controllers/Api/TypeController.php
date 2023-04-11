@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TypeResource;
 use App\Models\Type;
 use Illuminate\Http\Request;
 
@@ -17,19 +18,9 @@ class TypeController extends Controller
     {
         $types = Type::all();
         return response()->json([
-            'message' => 'Get type list Successfully',
-            'type' => $types
+            TypeResource::collection($types), 
+            'Get list type Successfully.'
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -40,11 +31,10 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
-        $type = Type::create($request->input());
-        return response()->json([
-            'message' => 'Type successfully created',
-            'type' => $type
+        $type = Type::create([
+            'name' => $request->input('name'),
         ]);
+        return response()->json(['Type created successfully.', new TypeResource($type)]);
     }
 
     /**
@@ -56,21 +46,10 @@ class TypeController extends Controller
     public function show($id)
     {
         $type = Type::find($id);
-        return response()->json([
-            'message' => 'Get Type successfully',
-            'type' => $type
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        if(is_null($type)){
+            return response()->json('Type not found', 404);
+        }
+        return response()->json(new TypeResource($type));
     }
 
     /**
@@ -83,11 +62,13 @@ class TypeController extends Controller
     public function update(Request $request, $id)
     {
         $type = Type::find($id);
-        $type->update($request->input());
-        return response()->json([
-            'message' => 'Update Type successfully',
-            'type' => $type
+        $type->update([
+            'name' => $request->name,
         ]);
+        if(is_null($type)){
+            return response()->json('Update type failed', 404);
+        }
+        return response()->json(new TypeResource($type));
     }
 
     /**
@@ -100,8 +81,6 @@ class TypeController extends Controller
     {
         $type = Type::findOrFail($id);
         $type->delete();
-        return response()->json([
-            'massage' => 'Delete type successfully',
-        ]);
+        return response()->json('Type deleted successfully');
     }
 }

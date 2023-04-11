@@ -33,8 +33,8 @@
                             <td>
                                 <?php echo $task->description?> 
                             </td> 
-                            <td>{{ $task->type->name }}</td>
-                            <td>{{ $task->user->name }}</td>
+                            <td>{{ optional($task->type)->name }}</td>
+                            <td>{{ optional($task->user)->name }}</td>
                             <td>{{ ucfirst($task->status) }}</td> 
                             <td>
                                 <a class="btn btn-sm btn-outline-info" href="{{ route('mytasks.show',$task->id) }}"><i class="fa-regular fa-eye"></i></a>

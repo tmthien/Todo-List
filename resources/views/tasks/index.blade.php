@@ -42,9 +42,9 @@
                         <td>{{ $task->title }}</td>
                         <td><?php echo $task->description ?></td> 
                         <td> 
-                           {{ $task->user->name }}
+                           {{ optional($task->user)->name }}
                         </td>
-                        <td>{{ $task->type->name }}</th>
+                        <td>{{ optional($task->type)->name }}</th>
                         <td>{{ ucfirst($task->status) }}</td> 
                         <td>
                             <form action="{{ route('tasks.destroy',$task->id) }}" method="POST">

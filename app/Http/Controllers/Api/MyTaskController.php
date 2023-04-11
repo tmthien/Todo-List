@@ -8,12 +8,20 @@ use App\Http\Resources\TaskResource;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Models\Task;
+use App\Repositories\MyTask\MyTaskRepositoryInterFace;
 
 class MyTaskController extends Controller
 {
+    private MyTaskRepositoryInterFace $myTaskRepository;
+
+    public function __construct(MyTaskRepositoryInterface $myTaskRepository) 
+    {
+        $this->myTaskRepository = $myTaskRepository;
+    }
+
     public function index() {
-        $user_id = auth('api')->user()->id;
-        $tasks = Task::where('user_id', $user_id)->get();
+        $id = auth()->user()->id;
+        $tasks = $this->myTaskRepository->index($id);
         return response()->json([
             TaskResource::collection($tasks), 
             'Get list task Successfully.'
@@ -21,20 +29,17 @@ class MyTaskController extends Controller
     }
 
     public function show($id) {
-        $task = Task::find($id);
-        $comment = Comment::where('task_id', $task->id)->first();
+        $task = $this->myTaskRepository->show($id);
+        $comment = Comment::findOrFail($task->id)->get();
         return response()->json([
             'task' => new TaskResource($task), 
-            'comment' => new CommentResource($comment),
+            'comment' => CommentResource::collection($comment),
             'Get list task Successfully.'
         ]);
     }
 
     public function update(Request $request, $id){
-        $task  = Task::find($id);
-        $task->update([
-            'status'=> $request->status
-        ]);
+        $task = $this->myTaskRepository->update($request, $id);
         return response()->json(['Task updated successfully.', new TaskResource($task)]);
     }
 }
